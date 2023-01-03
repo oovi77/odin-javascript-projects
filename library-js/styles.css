@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    border: 2px solid rebeccapurple;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.book-container {
+    margin-top: 10px;
+    border: 1px solid rebeccapurple;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+}
+
+.book-container * {
+    border: 1px solid orange;
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid skyblue;
+}
+
+.form-container .form-div {
+    margin: 5px;
+    border: 1px solid red;
+}

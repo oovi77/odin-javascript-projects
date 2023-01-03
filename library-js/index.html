@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">A Little Library</h1>
+    </header>
+
+    <div class="book-container">
+        <div class="book">test book1</div>
+        <div class="book">test book2</div>
+    </div>
+
+    <form class="form-container" action="" method="">
+
+        <div class="form-div">
+            <label for="book_title">Title:</label>
+            <input type="text" id="book_title" name="book_title">
+        </div>
+
+        <div class="form-div">
+            <label for="book_author">Author:</label>
+            <input type="text" id="book_author" name="book_author">
+        </div>
+
+        <div class="form-div">
+            <label for="book_pages">Number of Pages:</label>
+            <input type="number" id="book_pages" name="book_pages">
+        </div>
+<!-- change this to a radio button??-->
+        <div class="form-div">
+            <label for="book_read_yes">Read:</label>
+            <input type="radio" id="book_read_yes" name="book_read_status" value="1">
+        </div>
+        <div class="form-div">
+            <label for="book_read_no">Not Read:</label>
+            <input type="radio" id="book_read_no" name="book_read_status" value="0">
+        </div>
+
+        <button class="addBookButton" type="button">Add Book</button>
+
+    </form>
+    
+</body>
+</html>
