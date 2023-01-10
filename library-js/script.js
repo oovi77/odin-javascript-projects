@@ -18,6 +18,7 @@ function Book (title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.identifier = `${this.title}-${this.pages}`;
     myLibrary.push(this);
 }
 
@@ -39,27 +40,62 @@ console.log(myLibrary);
 
 //work on this, maybe addNodeElement shennanigans??
 
-const bookContainer = document.querySelector('.book-container');
+
 
 
 //goes through the bookArray and creates a div on the web page to hold / display
 //each book object in the bookArray
 function displayLibrary (bookArray) {
+
+    const bookContainer = document.querySelector('.book-container');
+
     bookArray.forEach(item => {
 
         //if the item does not exist on the page then you create / display it
         if (document.querySelector(`div[data-id='${item.title}-${item.pages}']`) === null) {
 
         let bookDiv = document.createElement('div');
+        let removeBtn = document.createElement('button');
+        removeBtn.textContent = 'X';
+        removeBtn.classList.add('remove-button');
+        removeBtn.setAttribute('data-id', `${item.title}-${item.pages}`);
+        removeBtn.addEventListener('click', removeFromLibrary);
         //temp.classList.add(`cl-${item.pages}`);
         bookDiv.setAttribute('data-id', `${item.title}-${item.pages}`);
         bookDiv.textContent = `${item.info()}`;
         bookDiv.classList.add('book');
         bookContainer.appendChild(bookDiv);
+        bookDiv.appendChild(removeBtn);
         //console.log(item.info());
         }
     });
 } 
+
+//need to figure out how to get information from when the button to remove a book
+//is clicked to get the info for which book the button is tied to and then to
+//remove said book
+function removeFromLibrary (event) {
+
+    const bookContainer = document.querySelector('.book-container');
+
+    //console.log(event.target); //event.target returns the element that triggered the event (the button)
+    bookToRemove = event.target.getAttribute('data-id');
+    console.log(bookToRemove); //returns the data-id of the button
+
+
+    
+    myLibrary = myLibrary.filter(item => item.identifier !== bookToRemove);  //removes the book from myLibrary
+
+    const bookDomEle = document.querySelector(`div[data-id='${bookToRemove}']`); //find the div that the book
+    //is in so that we can remove it
+    //console.log(bookDomEle);
+
+    bookContainer.removeChild(bookDomEle);
+    displayLibrary(myLibrary);
+    
+    
+    //need to remove book from array and then remove node and then call display library function?
+}
 
 //need a function to insert hyphens - when given a book title
 //so I can use it when doing temp.classList.add(book-title-with-hyphens)
@@ -132,6 +168,7 @@ function getFormBookInfo () {
 const addBookBtn = document.querySelector('.addBookButton');
 //console.log(addBookBtn);
 addBookBtn.addEventListener('click', getFormBookInfo);
+
 
 
 

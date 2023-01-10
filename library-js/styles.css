@@ -21,7 +21,7 @@
     grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
 }
 
-.book-container * {
+.book-container div {
     border: 1px solid orange;
     text-align: center;
 }
@@ -37,4 +37,11 @@
 .form-container .form-div {
     margin: 5px;
     border: 1px solid red;
+}
+
+.remove-button {
+    width: 20px;
+    border-radius: 50%;
+    color: red;
+    background-color: white;
 }
