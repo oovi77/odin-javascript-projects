@@ -30,9 +30,9 @@ Book.prototype.info = function () {
     return (`${this.title} by ${this.author}, ${this.pages} pages, ${this.readStatus()}`);
 }
 
-const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-const theTheFellowshipOfTheRing = new Book('The Fellowship of the Ring', 'J.R.R. Tolkien', 500, true);
-const bloodOfElves = new Book('Blood of Elves', 'Andrzej Sapkowski', 398, true);
+const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, "0");
+const theTheFellowshipOfTheRing = new Book('The Fellowship of the Ring', 'J.R.R. Tolkien', 500, "1");
+const bloodOfElves = new Book('Blood of Elves', 'Andrzej Sapkowski', 398, "1");
 
 //console.log(theHobbit.info());
 console.log(myLibrary);
@@ -56,17 +56,40 @@ function displayLibrary (bookArray) {
 
         let bookDiv = document.createElement('div');
         let removeBtn = document.createElement('button');
+        let readBtn = document.createElement('button');
+        let infoSpan = document.createElement('span');
+
+        
+
+
+        readBtn.textContent = 'read';
+        readBtn.classList.add('read-button');
+        readBtn.setAttribute('data-id', `${item.title}-${item.pages}`); //need this to link the button to the
+        //book it represents
+        readBtn.setAttribute('type', 'button');
+        readBtn.addEventListener('click', toggleReadStatus);
+
         removeBtn.textContent = 'X';
         removeBtn.classList.add('remove-button');
-        removeBtn.setAttribute('data-id', `${item.title}-${item.pages}`);
+        removeBtn.setAttribute('data-id', `${item.title}-${item.pages}`); //need this so the button knows which
+        //book to remove
         removeBtn.addEventListener('click', removeFromLibrary);
         //temp.classList.add(`cl-${item.pages}`);
+
+
+        infoSpan.classList.add('info-span');
+        infoSpan.textContent = `${item.info()}`;
+        
         bookDiv.setAttribute('data-id', `${item.title}-${item.pages}`);
-        bookDiv.textContent = `${item.info()}`;
+        //bookDiv.textContent = `${item.info()}`;
         bookDiv.classList.add('book');
         bookContainer.appendChild(bookDiv);
+        bookDiv.appendChild(infoSpan);
         bookDiv.appendChild(removeBtn);
+        bookDiv.appendChild(readBtn);
         //console.log(item.info());
+        
+
         }
     });
 } 
@@ -79,7 +102,7 @@ function removeFromLibrary (event) {
     const bookContainer = document.querySelector('.book-container');
 
     //console.log(event.target); //event.target returns the element that triggered the event (the button)
-    bookToRemove = event.target.getAttribute('data-id');
+    const bookToRemove = event.target.getAttribute('data-id');
     console.log(bookToRemove); //returns the data-id of the button
 
 
@@ -90,8 +113,52 @@ function removeFromLibrary (event) {
     //is in so that we can remove it
     //console.log(bookDomEle);
 
-    bookContainer.removeChild(bookDomEle);
-    displayLibrary(myLibrary);
+    bookContainer.removeChild(bookDomEle);  //removes the book from the DOM
+    displayLibrary(myLibrary);  //updates the page with the removed book
+    
+    
+    //need to remove book from array and then remove node and then call display library function?
+}
+
+function toggleReadStatus (event) {
+
+    const bookContainer = document.querySelector('.book-container');
+
+    //console.log(event.target); //event.target returns the element that triggered the event (the button)
+    const bookToToggle = event.target.getAttribute('data-id');
+    //console.log(bookToToggle); //returns the data-id of the button
+
+    
+
+    myLibrary = myLibrary.map(item => {
+        if(item.identifier === bookToToggle) {
+            if(item.read === '0') {
+                item.read = '1';
+            } else if (item.read === '1') {
+                item.read = '0';
+            }
+        }
+        return item;
+    });
+
+    const bookT = myLibrary.filter(item => item.identifier === bookToToggle);
+
+    //console.log(myLibrary);
+    
+
+
+    
+    //myLibrary = myLibrary.filter(item => item.identifier !== bookToRemove);  //removes the book from myLibrary
+
+    const bookDomEle = document.querySelector(`div[data-id='${bookToToggle}'] span`); //find the div that the book is in
+    //console.log(bookDomEle);
+    bookDomEle.textContent = `${bookT[0].info()}`; //big problem with .textContent, when we change it it removes
+    //all child elements to it so its removing the buttons, need to use a span inside the div so we can ONLY target
+    //the text of the read status!!!
+    
+
+    //bookContainer.removeChild(bookDomEle);  //removes the book from the DOM
+    //displayLibrary(myLibrary);  //updates the page with the removed book
     
     
     //need to remove book from array and then remove node and then call display library function?
@@ -129,6 +196,8 @@ displayLibrary(myLibrary);
 //to check if the data-attribute type exists (by checking if it returns null)
 
 //start on adding a button to each book to remove it from the library
+
+//start on adding a button to toggle the read status on a book;
 
 function getFormBookInfo () {
     const formBookInfo = document.querySelectorAll('.form-div input');
