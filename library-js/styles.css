@@ -13,12 +13,18 @@
     padding: 20px;
 }
 
+
+
 .book-container {
+    height: 400px;
     margin-top: 10px;
-    border: 1px solid rebeccapurple;
+    border: 5px solid rebeccapurple;
     display: grid;
+    align-content: center;
+    justify-content: center;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+    
 }
 
 .book-container div {
